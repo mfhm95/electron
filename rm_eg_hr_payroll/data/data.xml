@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+         <record id="structure_type_egypt_payroll"
+            model="hr.payroll.structure.type">
+        <field name="name">Egypt Payroll</field>
+        <field name="country_id" eval="False"/>
+    </record>
+
+    <record id="hr_salary_structure_eg" model="hr.payroll.structure">
+        <field name="name">Salary Structure of Egypt</field>
+        <field name="type_id" ref="structure_type_egypt_payroll"/>
+        <field name="country_id" eval="False"/>
+    </record>
+
+
+    <!-- Hr Salary Rules for Basic Salary-->
+    <record id="hr_salary_rule_basic" model="hr.salary.rule">
+        <field name="code">INBASIC</field>
+        <field name="name">Insurance basic</field>
+        <field name="struct_id" ref="hr_salary_structure_eg"/>
+        <field name="category_id" ref="hr_payroll.BASIC"/>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.basic_salary
+        </field>
+        <field name="sequence" eval="1"/>
+        <field name="note">Basic Salary of the Social Insurance</field>
+    </record>
+
+    <!-- Hr Salary Rules for Variable Salary-->
+    <record id="hr_salary_rule_variable" model="hr.salary.rule">
+        <field name="code">INVAR</field>
+        <field name="name">Insurance Variable</field>
+        <field name="struct_id" ref="hr_salary_structure_eg"/>
+        <field name="category_id" ref="hr_payroll.BASIC"/>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.variable_salary
+        </field>
+        <field name="sequence" eval="2"/>
+        <field name="note">Variable Salary of the Social Insurance</field>
+    </record>
+
+
+
+    <!--Payroll rule for  allowances-->
+    <record id="hr_payroll_rule_allowances" model="hr.salary.rule">
+        <field name="code">ALWS</field>
+        <field name="name">Allowances</field>
+        <field name="struct_id" ref="hr_salary_structure_eg"/>
+        <field name="category_id" ref="hr_payroll.BASIC"/>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.allowances</field>
+        <field name="sequence" eval="4"/>
+        <field name="note">Allowances for the employee</field>
+    </record>
+
+    <!-- Hr Salary Rules for Social Insurance Deduction -->
+    <record id="hr_salary_rule_insurance_deduction" model="hr.salary.rule">
+        <field name="code">INDED</field>
+        <field name="name">Social Insurance Deduction</field>
+        <field name="struct_id" ref="hr_salary_structure_eg"/>
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = contract.sin_exist or False
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = - (contract.basic_salary *
+            0.14 + contract.variable_salary * 0.11)
+        </field>
+        <field name="sequence" eval="50"/>
+        <field name="note">Social Insurance Deduction contribution of the
+            employee 14% of the basic salary + 11 % of
+            variable salary
+        </field>
+    </record>
+
+
+    <record id="hr_salary_rule_tax_deduction" model="hr.salary.rule">
+        <field name="code">TXDED</field>
+        <field name="name">Income tax Deduction</field>
+        <field name="struct_id" ref="hr_salary_structure_eg"/>
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = TAXABLE >= 1250 or False
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract.calculate_eg_tax(TAXABLE)
+        </field>
+        <field name="sequence" eval="180"/>
+        <field name="note">Income tax deduction
+
+        </field>
+    </record>
+
+
+    <record id="hr_rule_gross" model="hr.salary.rule">
+        <field name="name">Gross</field>
+        <field name="sequence" eval="100"/>
+        <field name="code">GROSS</field>
+        <field name="struct_id" ref="hr_salary_structure_eg"/>
+        <field name="category_id" ref="hr_payroll.GROSS"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = categories.BASIC+categories.ALW
+        </field>
+    </record>
+
+    <!--taxable ammount-->
+    <record id="hr_rule_taxable" model="hr.salary.rule">
+        <field name="name">Taxable Amount</field>
+        <field name="code">TAXABLE</field>
+        <field name="sequence">150</field>
+        <field name="struct_id" ref="hr_salary_structure_eg"/>
+        <field name="category_id" ref="hr_payroll.GROSS"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = categories.BASIC+categories.DED
+        </field>
+    </record>
+
+
+    </data>
+
+
+
+</odoo>

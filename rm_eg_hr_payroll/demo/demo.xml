@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data noupdate="1">
+
+        <record id="other_alw_an20" model="hr.alw">
+            <field name="name">2020 Annual Raise</field>
+            <field name="code">ANR20</field>
+            <field eval="20" name="amount"/>
+        </record>
+
+
+
+
+
+
+
+        <record id="employee_rk" model="hr.employee">
+            <field name="name">Ramadan Khalil</field>
+            <field name="department_id" ref="hr.dep_management"/>
+            <field name="job_id" ref="hr.job_developer"/>
+            <field name="work_phone">+201143267087</field>
+            <field name="work_email">rkhalil1990@gmail.com</field>
+            <field name="marital">married</field>
+             <field name="image_1920" type="base64"
+                   file="rm_eg_hr_payroll/static/img/rkh.jpg"/>
+            <field name="birthday" eval="'1986-06-20'"/>
+            <field name="start_date" eval="'2010-10-1'"/>
+
+
+        </record>
+
+
+
+
+        <record id="hr_contract_ramadan" model="hr.contract">
+            <field name="name">Contract For Ramadan Khalil</field>
+            <field name="state">open</field>
+            <field name="date_start" eval="time.strftime('%Y-%m')+'-1'"/>
+            <field name="date_end" eval="time.strftime('%Y')+'-12-31'"/>
+            <field name="structure_type_id" ref="rm_eg_hr_payroll.structure_type_egypt_payroll"/>
+            <field name="employee_id" ref="employee_rk"/>
+            <field name="notes">Ramadan Khalil`s contract</field>
+            <field eval="8000.0" name="wage"/>
+            <field name="resource_calendar_id"
+                   ref="resource.resource_calendar_std"/>
+            <field eval="4500" name="basic_salary"/>
+            <field eval="970" name="variable_salary"/>
+        </record>
+
+
+    </data>
+</odoo>

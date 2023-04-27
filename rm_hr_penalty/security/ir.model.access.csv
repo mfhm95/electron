@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_penalty_user,access_hr_penalty_user,model_hr_penalty,hr.group_hr_user,1,1,1,1
+access_hr_penalty_manager,access_hr_penalty_manager,model_hr_penalty,hr.group_hr_manager,1,1,1,1
+
+access_hr_penalty_reason,access_hr_penalty_reason,model_hr_penalty_reason,,1,1,1,1
+
+access_hr_penalty_reason_line,access_hr_penalty_reason_line,model_hr_penalty_reason_line,,1,1,1,1

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate='1'>
+        <record id="ir_seq_hr_penalty" model="ir.sequence">
+            <field name="name">Penalty Request</field>
+            <field name="code">hr.penalty.seq</field>
+            <field name="prefix">PEN</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+            <field name="number_next_actual">1</field>
+            <field name="implementation">standard</field>
+        </record>
+    </data>
+
+
+    <!--Adding a salary rule for Penalty-->
+    <data noupdate="0">
+
+
+        <record id="structure_type_employee" model="hr.payroll.structure.type">
+            <field name="name">Employee</field>
+            <field name="country_id" eval="False"/>
+        </record>
+
+        <record id="hr_payroll_salary_structure_emp" model="hr.payroll.structure">
+            <field name="name">Employee</field>
+            <field name="country_id" eval="False"/>
+            <field name="type_id" ref="structure_type_employee"/>
+        </record>
+
+        <record id="hr_rule_penalty_days" model="hr.salary.rule">
+            <field name="name">Penalty As Days</field>
+            <field name="sequence" eval="110"/>
+            <field name="code">PENDAY</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="hr_payroll_salary_structure_emp"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = True</field>
+            <field name="condition_python">result = payslip.dict.pen_days() or False</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip.dict.pen_days() * contract.wage/26</field>
+        </record>
+
+
+        <record id="hr_rule_penalty_amount" model="hr.salary.rule">
+            <field name="name">Penalty As Amount</field>
+            <field name="sequence" eval="120"/>
+            <field name="code">PENAM</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="hr_payroll_salary_structure_emp"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = payslip.dict.pen_amount() or False</field>
+            <field name="condition_python">result = True</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip.dict.pen_amount()</field>
+        </record>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_employee_alw_user,hr.employee.alw.user,rm_eg_hr_payroll.model_hr_alw,hr.group_hr_user,1,1,0,0
+access_hr_employee_alw_manager,hr.employee.alw.manager,rm_eg_hr_payroll.model_hr_alw,hr.group_hr_manager,1,1,1,1
+
+access_hr_employee_alw_line_base,hr.employee.alw.line.base,rm_eg_hr_payroll.model_hr_alw_line,base.group_user,1,1,1,1
+access_hr_employee_alw_line_user,hr.employee.alw.line.user,rm_eg_hr_payroll.model_hr_alw_line,hr.group_hr_user,1,1,1,1
+access_hr_employee_alw_line_manager,hr.employee.alw.line.manager,rm_eg_hr_payroll.model_hr_alw_line,hr.group_hr_manager,1,1,1,1

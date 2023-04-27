@@ -1,0 +1,188 @@
+<odoo>
+
+    <record id="hr_penality_reason_form" model="ir.ui.view">
+        <field name="name">hr.penality.reason.form</field>
+        <field name="model">hr.penalty.reason</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="type"
+                        />
+                        <field name="no_days"
+                               attrs="{'invisible':[('type','!=','day')]}"/>
+                        <field name="amount"
+                               attrs="{'invisible':[('type','!=','amount')]}"/>
+                        <!--<field name="line_ids">
+                            <tree>
+                                <field name="counter"/>
+                                <field name="rate"/>
+                            </tree>
+                        </field>-->
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_penality_reason_tree" model="ir.ui.view">
+        <field name="name">hr.penality.reason.tree</field>
+        <field name="model">hr.penalty.reason</field>
+        <field name="arch" type="xml">
+            <tree string="Penality Reasons">
+                <field name="name"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_penality_reason_view" model="ir.actions.act_window">
+        <field name="name">Penality Reasons</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.penalty.reason</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+            </p>
+            <p>
+                <!-- More details about what a user can do with this object will be OK -->
+            </p>
+        </field>
+    </record>
+
+
+    <record id="hr_penalty_form_view" model="ir.ui.view">
+        <field name="name">hr.penalty.form.view</field>
+        <field name="model">hr.penalty</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="action_submit" states="draft"
+                            string="Submit To Manager" type="object"
+                            class="oe_highlight"/>
+                    <button name="action_draft" states="submit"
+                            string="Set To Draft" type="object"
+                            class="oe_highlight"/>
+                    <button name="action_approve" states="submit"
+                            string="Approve" type="object"
+                            class="oe_highlight"/>
+                    <button name="action_refuse" states="submit,approve"
+                            string="Refuse" type="object" class="oe_highlight"/>
+
+
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,submit,approve,refuse"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Penalty Reference"
+                                   nolabel="1"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="user"/>
+                            <field name="date"
+                                   attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+                        <group>
+                            <field name="apply_date"
+                                   attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="type" readonly="1"/>
+                            <field name="no_days"
+                                   attrs="{'invisible':[('type','!=','day')]}"/>
+                            <field name="amount"
+                                   attrs="{'invisible':[('type','!=','amount')]}"/>
+                        </group>
+                    </group>
+                    <group string="Employee Information">
+                        <field name="employee_id"
+                               attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="job_id"/>
+                        <field name="department_id"/>
+                        <field name="parent_id"/>
+                        <field name="reason_id"
+                               attrs="{'readonly':[('state','!=','draft')]}"/>
+                    </group>
+                    <div>
+                        <h1>Penalty Reasons</h1>
+                        <field name="desc"
+                               placeholder="Penalty  Reasons Description"
+                               attrs="{'readonly':[('state','!=','draft')]}"/>
+
+                    </div>
+                    <div attrs="{'invisible':[('state','!=','refuse')]}">
+                        <h1>Penalty Refuse Reasons</h1>
+                        <field name="refuse_reason"
+                               placeholder="Penalty Refuse Reasons"/>
+                    </div>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="hr_penalty_tree_view" model="ir.ui.view">
+        <field name="name">hr.penalty.tree.view</field>
+        <field name="model">hr.penalty</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_hr_penalty_view" model="ir.actions.act_window">
+        <field name="name">Hr Penalties</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.penalty</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+            </p>
+            <p>
+                <!-- More details about what a user can do with this object will be OK -->
+            </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+    <menuitem
+            id="menu_hr_penalty"
+            name="Penalties"
+            parent="hr.menu_hr_root"
+            groups="hr.group_hr_user"
+            sequence="80"/>
+    <!-- This Menu Item must have a parent and an action -->
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="menu_penality_cat" name="Penalities" parent="menu_hr_penalty"
+              sequence="10"/>
+    <menuitem id="menu_action_hr_penalities" name="Employees Penalties"
+              parent="menu_penality_cat"
+              action="action_hr_penalty_view"
+              sequence="10"/>
+
+    <menuitem id="menu_penality_config" name="Penalties Configurations"
+              parent="menu_hr_penalty" sequence="20"/>
+
+
+    <menuitem id="menu_action_hr_penality_reasons"
+              name="Employees Penalty Reasons" parent="menu_penality_config"
+              action="action_penality_reason_view"
+              sequence="20"/>
+</odoo>

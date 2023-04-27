@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="structure_type_attendance_sheet"
+                model="hr.payroll.structure.type">
+            <field name="name">Attendance Sheet</field>
+            <field name="country_id" eval="False"/>
+        </record>
+
+        <record id="work_entry_type_attendance_sheet_overtime"
+                model="hr.work.entry.type">
+            <field name="name">Attendance Sheet Overtime</field>
+            <field name="code">ATTSHOT</field>
+            <field name="color">3</field>
+            <field name="is_leave">False</field>
+            <field name="round_days">HALF</field>
+            <field name="round_days_type">DOWN</field>
+        </record>
+
+        <record id="work_entry_type_attendance_sheet_late_in"
+                model="hr.work.entry.type">
+            <field name="name">Attendance Sheet Late In</field>
+            <field name="code">ATTSHLI</field>
+            <field name="color">3</field>
+            <field name="is_leave">False</field>
+            <field name="round_days">HALF</field>
+            <field name="round_days_type">DOWN</field>
+        </record>
+
+
+        <record id="work_entry_type_attendance_sheet_unpaid_leave"
+                model="hr.work.entry.type">
+            <field name="name">Unpaid Leave</field>
+            <field name="code">UNPAID</field>
+            <field name="color">3</field>
+            <field name="is_leave">True</field>
+            <field name="round_days">HALF</field>
+            <field name="round_days_type">DOWN</field>
+        </record>
+
+
+        <record id="work_entry_type_attendance_sheet_difftime"
+                model="hr.work.entry.type">
+            <field name="name">Attendance Sheet Diff Time</field>
+            <field name="code">ATTSHDT</field>
+            <field name="color">3</field>
+            <field name="is_leave">False</field>
+            <field name="round_days">HALF</field>
+            <field name="round_days_type">DOWN</field>
+        </record>
+
+        <record id="work_entry_type_attendance_sheet_absence"
+                model="hr.work.entry.type">
+            <field name="name">Attendance Sheet Absence</field>
+            <field name="code">ATTSHAB</field>
+            <field name="color">3</field>
+            <field name="is_leave">False</field>
+            <field name="round_days">HALF</field>
+            <field name="round_days_type">DOWN</field>
+        </record>
+        <record id="work_entry_type_attendance_sheet_missing_in"
+                model="hr.work.entry.type">
+            <field name="name">Attendance Sheet Missing-In</field>
+            <field name="code">ATTSHMI</field>
+            <field name="color">3</field>
+            <field name="is_leave">False</field>
+            <field name="round_days">HALF</field>
+            <field name="round_days_type">DOWN</field>
+        </record>
+        <record id="work_entry_type_attendance_sheet_missing_out"
+                model="hr.work.entry.type">
+            <field name="name">Attendance Sheet Missing-Out</field>
+            <field name="code">ATTSHMO</field>
+            <field name="color">3</field>
+            <field name="is_leave">False</field>
+            <field name="round_days">HALF</field>
+            <field name="round_days_type">DOWN</field>
+        </record>
+        <record id="work_entry_type_attendance_sheet_meal"
+                model="hr.work.entry.type">
+            <field name="name">Attendance Sheet Meal Allowance</field>
+            <field name="code">ATTSHMEAL</field>
+            <field name="color">3</field>
+            <field name="is_leave">False</field>
+            <field name="round_days">HALF</field>
+            <field name="round_days_type">DOWN</field>
+        </record>
+
+
+        <record id="work_entry_type_attendance_sheet_presence"
+                model="hr.work.entry.type">
+            <field name="name">Attendance Sheet Presence Allowance</field>
+            <field name="code">ATTSHPRS</field>
+            <field name="color">3</field>
+            <field name="is_leave">False</field>
+            <field name="round_days">HALF</field>
+            <field name="round_days_type">DOWN</field>
+        </record>
+
+        <record id="structure_attendance_sheet" model="hr.payroll.structure">
+            <field name="name">Attendance Sheet Salary Structure</field>
+            <field name="type_id" ref="rm_hr_attendance_sheet.structure_type_attendance_sheet"/>
+            <field name="country_id" eval="False"/>
+            <field name="unpaid_work_entry_type_ids"
+                   eval="[
+                   (4, ref('rm_hr_attendance_sheet.work_entry_type_attendance_sheet_overtime')),
+                   (4, ref('rm_hr_attendance_sheet.work_entry_type_attendance_sheet_late_in')),
+                   (4, ref('rm_hr_attendance_sheet.work_entry_type_attendance_sheet_difftime')),
+                   (4, ref('rm_hr_attendance_sheet.work_entry_type_attendance_sheet_meal')),
+                    (4, ref('rm_hr_attendance_sheet.work_entry_type_attendance_sheet_unpaid_leave')),
+                     (4, ref('rm_hr_attendance_sheet.work_entry_type_attendance_sheet_presence')),
+                     (4, ref('rm_hr_attendance_sheet.work_entry_type_attendance_sheet_missing_in')),
+                     (4, ref('rm_hr_attendance_sheet.work_entry_type_attendance_sheet_missing_out')),
+                   (4, ref('rm_hr_attendance_sheet.work_entry_type_attendance_sheet_absence'))]"/>
+        </record>
+
+        <record id="rm_hr_attendance_sheet.structure_type_attendance_sheet"
+                model="hr.payroll.structure.type">
+            <field name="default_struct_id" ref="rm_hr_attendance_sheet.structure_attendance_sheet"/>
+        </record>
+
+
+        <record id="holiday_status_per" model="hr.leave.type">
+            <field name="name">Permission</field>
+            <field name="allocation_validation_type">set</field>
+            <field name="color_name">lightgreen</field>
+            <field name="request_unit">hour</field>
+        </record>
+
+
+        <record id="paperformat_attendance_sheet" model="report.paperformat">
+            <field name="name">attendance sheet</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+        <!-- Hr Salary Rules for Absence Deduction-->
+        <record id="hr_salary_rule_att_absence" model="hr.salary.rule">
+            <field name="code">ABS</field>
+            <field name="name">Absence</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id"
+                   ref="rm_hr_attendance_sheet.structure_attendance_sheet"/>
+            <field name="condition_select">none</field>
+            <!--            <field name="condition_python">result =(worked_days.ATTSHAB and worked_days.ATTSHAB.number_of_hours > 0) or-->
+            <!--                False-->
+            <!--            </field>-->
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=-(worked_days.ATTSHAB.number_of_days * (contract.wage
+                /(9*26)))
+            </field>
+            <field name="sequence" eval="60"/>
+            <field name="note">deduction of absence days</field>
+        </record>
+
+
+        <record id="hr_rule_worked_hours" model="hr.salary.rule">
+            <field name="name">Worked Hours</field>
+            <field name="sequence" eval="120"/>
+            <field name="code">ATSHWH</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="rm_hr_attendance_sheet.structure_attendance_sheet"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = payslip.dict.get_attendance_sheet_worked_hours() or False</field>
+            <field name="condition_python">result = True</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip.dict.get_attendance_sheet_worked_hours() * contract.hourly_wage</field>
+        </record>
+
+
+        <record id="hr_salary_rule_att_missing_in" model="hr.salary.rule">
+            <field name="code">MISSININ</field>
+            <field name="name">Missing In</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id"
+                   ref="rm_hr_attendance_sheet.structure_attendance_sheet"/>
+            <field name="condition_select">none</field>
+            <!--            <field name="condition_python">result =(worked_days.ATTSHAB and worked_days.ATTSHAB.number_of_hours > 0) or-->
+            <!--                False-->
+            <!--            </field>-->
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=-(worked_days.ATTSHMI.number_of_hours * (contract.wage
+                /(9*26)))
+            </field>
+            <field name="sequence" eval="60"/>
+            <field name="note">deduction of missing in</field>
+        </record>
+        <record id="hr_salary_rule_att_missing_out" model="hr.salary.rule">
+            <field name="code">MISSINOUT</field>
+            <field name="name">Missing Out</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id"
+                   ref="rm_hr_attendance_sheet.structure_attendance_sheet"/>
+            <field name="condition_select">none</field>
+            <!--            <field name="condition_python">result =(worked_days.ATTSHAB and worked_days.ATTSHAB.number_of_hours > 0) or-->
+            <!--                False-->
+            <!--            </field>-->
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=-(worked_days.ATTSHMO.number_of_hours * (contract.wage
+                /(9*26)))
+            </field>
+            <field name="sequence" eval="60"/>
+            <field name="note">deduction of missing out</field>
+        </record>
+
+        <record id="hr_salary_rule_att_unpaid_leave" model="hr.salary.rule">
+            <field name="code">UNPAID</field>
+            <field name="name">Unpaid Leaves</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id"
+                   ref="rm_hr_attendance_sheet.structure_attendance_sheet"/>
+            <field name="condition_select">none</field>
+            <!--            <field name="condition_python">result =(worked_days.UNPAID and worked_days.UNPAID.number_of_hours > 0) or-->
+            <!--                False-->
+            <!--            </field>-->
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result =-(worked_days.UNPAID * (contract.wage / (9*26)))
+            </field>
+            <field name="sequence" eval="60"/>
+            <field name="note">deduction of Unpaid Leaves</field>
+        </record>
+
+
+        <record id="hr_salary_rule_att_late" model="hr.salary.rule">
+            <field name="code">LATE</field>
+            <field name="name">Late In</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id"
+                   ref="rm_hr_attendance_sheet.structure_attendance_sheet"/>
+            <field name="condition_select">none</field>
+            <!--            <field name="condition_python">result = (worked_days.ATTSHLI and worked_days.ATTSHLI.number_of_hours > 0) or-->
+            <!--                False-->
+            <!--            </field>-->
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=-worked_days.ATTSHLI.number_of_days * contract.wage / (9*26)
+            </field>
+            <field name="sequence" eval="65"/>
+            <field name="note">deduction of late in</field>
+        </record>
+        <record id="hr_salary_rule_att_diff" model="hr.salary.rule">
+            <field name="code">DIFF</field>
+            <field name="name">Difference time</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id"
+                   ref="rm_hr_attendance_sheet.structure_attendance_sheet"/>
+            <field name="condition_select">none</field>
+            <!--            <field name="condition_python">result =(worked_days.ATTSHDT and worked_days.ATTSHDT.number_of_hours > 0) or-->
+            <!--                False-->
+            <!--            </field>-->
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=-worked_days.ATTSHDT.number_of_days * contract.wage / (9*26)
+            </field>
+            <field name="sequence" eval="70"/>
+            <field name="note">deduction of Difference time</field>
+        </record>
+
+        <!-- Hr Salary Rules for Absence Deduction-->
+        <record id="com" model="hr.salary.rule">
+            <field name="code">OVT</field>
+            <field name="name">overtime</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id"
+                   ref="rm_hr_attendance_sheet.structure_attendance_sheet"/>
+
+            <field name="condition_select">none</field>
+            <field name="condition_python">result = (worked_days.ATTSHOT.number_of_days and worked_days.ATTSHOT.number_of_days > 0 ) or False</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = (contract.wage /(9*26)) * worked_days.ATTSHOT.number_of_days
+            </field>
+            <field name="sequence" eval="30"/>
+            <field name="note">Over time</field>
+        </record>
+
+        <record id="hr_salary_rule_att_meal" model="hr.salary.rule">
+            <field name="code">MEAL</field>
+            <field name="name">Meal Allowance</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id"
+                   ref="rm_hr_attendance_sheet.structure_attendance_sheet"/>
+
+            <field name="condition_select">none</field>
+            <field name="condition_python">result = (worked_days.ATTSHMEAL and worked_days.ATTSHMEAL > 0 ) or
+                False
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = worked_days.ATTSHMEAL
+            </field>
+            <field name="sequence" eval="30"/>
+            <field name="note">Over time</field>
+        </record>
+
+        <record id="hr_salary_rule_att_presence" model="hr.salary.rule">
+            <field name="code">ATTSHPRS</field>
+            <field name="name">Presence Allowance</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id"
+                   ref="rm_hr_attendance_sheet.structure_attendance_sheet"/>
+
+            <field name="condition_select">none</field>
+            <!--            <field name="condition_python">result = (worked_days.ATTSHPRS and worked_days.ATTSHPRS.number_of_days > 0 ) or False-->
+            <!--            </field>-->
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = worked_days.ATTSHPRS.number_of_days
+            </field>
+            <field name="sequence" eval="30"/>
+            <field name="note">Over time</field>
+        </record>
+        <record id="hr_salary_rule_bus_registered" model="hr.salary.rule">
+            <field name="code">ATTSHBR</field>
+            <field name="name">Bus Registered</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id"
+                   ref="rm_hr_attendance_sheet.structure_attendance_sheet"/>
+
+            <field name="condition_select">none</field>
+            <field name="condition_python">result = contract.is_bus_registered
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = - contract.bus_registered
+            </field>
+            <field name="sequence" eval="30"/>
+            <field name="note">Bus Registered</field>
+        </record>
+    </data>
+
+
+    <data noupdate="1">
+        <record id="resource_calendar_attendance_sheet"
+                model="resource.calendar">
+            <field name="name">Attendance Sheet Working Hours</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="attendance_ids"
+                   eval="[
+                (0, 0, {'name': 'Monday', 'dayofweek': '0', 'hour_from': 8, 'hour_to': 16, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Tuesday', 'dayofweek': '1', 'hour_from': 8, 'hour_to': 16, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Wednesday', 'dayofweek': '2', 'hour_from': 8, 'hour_to': 16, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Thursday', 'dayofweek': '3', 'hour_from': 8, 'hour_to': 16, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Sunday', 'dayofweek': '6', 'hour_from': 8, 'hour_to': 16, 'day_period': 'morning'}),
+            ]"
+            />
+        </record>
+
+        <record forcecreate="True" id="ir_cron_create_attendance_sheet_monthly" model="ir.cron">
+            <field name="name">Attendance sheet: create monthly sheet</field>
+            <field name="model_id" ref="model_attendance_sheet"/>
+            <field name="state">code</field>
+            <field name="code">model.create_sheet_every_month()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+        </record>
+
+        <record forcecreate="True" id="ir_cron_create_check_allocation" model="ir.cron">
+            <field name="name">Attendance sheet: check allocation compensatory</field>
+            <field name="model_id" ref="model_attendance_sheet"/>
+            <field name="state">code</field>
+            <field name="code">model._check_over_time_allocation()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">8</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+        </record>
+
+    </data>
+
+</odoo>

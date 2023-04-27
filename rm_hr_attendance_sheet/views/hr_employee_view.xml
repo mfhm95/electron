@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_employee_form_inherit" model="ir.ui.view">
+            <field name="name">view.employee.form.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[@name='button_box']" position="inside">
+                        <button name="open_attendance_sheets"
+                                type="object"
+                                string="Attendance sheets"
+                                class="oe_stat_button"
+                                icon="fa-file">
+                                <field name="attendance_sheet_count" no_label="1"/>
+                        </button>
+                </xpath>
+
+
+            </field>
+        </record>
+    </data>
+</odoo>
