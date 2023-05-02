@@ -123,7 +123,7 @@
 
         <record id="holiday_status_per" model="hr.leave.type">
             <field name="name">Permission</field>
-            <field name="allocation_validation_type">set</field>
+            <field name="allocation_validation_type">officer</field>
             <field name="color_name">lightgreen</field>
             <field name="request_unit">hour</field>
         </record>

@@ -20,6 +20,7 @@
                 'hr_payroll',
                 'hr_holidays',
                 'hr_overtime_request',
+                'planning',
                 'hr_attendance'],
     'data': [
         'data/ir_sequence.xml',
