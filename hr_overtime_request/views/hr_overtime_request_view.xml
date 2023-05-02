@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hr_overtime_request_view_form" model="ir.ui.view">
+            <field name="name">hr.overtime.request.view.form</field>
+            <field name="model">hr.overtime.request</field>
+            <field name="arch" type="xml">
+                <form string="hr overtime request">
+                    <header>
+                        <field name="stage_id" widget="statusbar" options="{'clickable': '1'}"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Refused" bg_color="bg-danger"
+                                attrs="{'invisible': [('state', '!=', 'refused')]}"/>
+                        <widget name="web_ribbon" title="Approved"
+                                attrs="{'invisible': [('state', '!=', 'approved')]}"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1" force_save="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="config_id" attrs="{'readonly': [('state', '!=', 'new')]}"/>
+                                <field name="employee_ids" widget="many2many_tags" attrs="{'readonly': [('state', '!=', 'new')]}"/>
+                                <label for="date_from" string="Period"/>
+                                <div class="o_row">
+                                    <field name="date_from" attrs="{'readonly': [('state', '!=', 'new')]}"/>
+                                    to
+                                    <field name="date_to" attrs="{'readonly': [('state', '!=', 'new')]}"/>
+                                </div>
+                                <field name="overtime" widget="float_time"/>
+                                <field name="state" invisible="1"/>
+                            </group>
+                            <field name="note" placeholder="Reason..." attrs="{'readonly': [('state', '!=', 'new'), ('state', '!=', False)]}"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="hr_overtime_request_view_tree" model="ir.ui.view">
+            <field name="name">hr.overtime.request.view.tree</field>
+            <field name="model">hr.overtime.request</field>
+            <field name="arch" type="xml">
+                <tree string="hr overtime request">
+                    <field name="name"/>
+                    <field name="employee_ids" widget="many2many_tags"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="stage_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_overtime_request_view_action"
+                model="ir.actions.act_window">
+            <field name="name">Overtime Request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.overtime.request</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem id="overtime_request_root"
+                  name="OverTime"
+                  sequence="6"
+                  groups="hr_overtime_request.group_hr_overtime_user"
+                  web_icon="hr_overtime_request,static/description/icon.png"/>
+
+
+        <menuitem id="menu_hr_overtime_request_action" name="Overtime Requests"
+                  parent="overtime_request_root"
+                  action="hr_overtime_request_view_action"
+                  sequence="1"/>
+
+
+    </data>
+</odoo>

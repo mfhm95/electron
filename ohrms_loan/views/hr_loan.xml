@@ -82,13 +82,12 @@
         <field name="name">date_not_readonly_hr_loan_form_view</field>
         <field name="model">hr.loan</field>
         <field name="inherit_id" ref="ohrms_loan.hr_loan_form_view"/>
-        <field name="groups_id" eval="[(4, ref('ohrms_loan.can_change_date_in_loan'))]"/>
         <field name="arch" type="xml">
-
             <xpath expr="//field[@name='date']" position="attributes">
-                <attribute name="readonly">0</attribute>
+                <t groups="ohrms_loan.can_change_date_in_loan">
+                    <attribute name="readonly">0</attribute>
+                </t>
             </xpath>
-
         </field>
         </record>
 
