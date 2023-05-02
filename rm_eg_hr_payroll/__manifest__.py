@@ -6,7 +6,7 @@
     'author': 'Ramadan Khalil',
 
     'website': "rkhalil1990@gmail.com",
-    'depends': ['base', 'hr_payroll', 'rm_bio_attendance'],
+    'depends': ['base', 'hr_payroll', 'rm_bio_attendance', 'hr_contract'],
     'price': 20,
     'currency': 'EUR',
 

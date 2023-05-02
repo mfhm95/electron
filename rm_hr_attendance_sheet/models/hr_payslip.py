@@ -175,7 +175,7 @@ class HrPayslip(models.Model):
         # for val in res:
         #     print(val,'<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
         res.update({'analytic_account_id': line.slip_id.contract_id.analytic_account_id.id,
-                    'analytic_tag_ids': line.slip_id.contract_id.analytic_tag_ids.ids,
+                    # 'analytic_tag_ids': line.slip_id.contract_id.analytic_tag_ids.ids,
                     })
         return res
 

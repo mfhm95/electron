@@ -12,9 +12,10 @@
 ##############################################################################
 
 
-from odoo import models, fields, api
+from odoo import models, fields, api,_
 from odoo.addons import decimal_precision as dp
 from odoo.exceptions import ValidationError, UserError
+from datetime import datetime, date
 
 
 class HrContract(models.Model):
@@ -23,6 +24,7 @@ class HrContract(models.Model):
 
     sin_exist = fields.Boolean("Has Social Insurance")
     sin_no = fields.Char("Social Insurance No", )
+    sin_amount = fields.Float("Social Insurance Amount", )
     sin_date = fields.Date("Social Insurance Date")
     sin_end_date = fields.Date("Social Insurance  end Date")
     mi_exist = fields.Boolean("Has Medical Insurance")
@@ -42,6 +44,7 @@ class HrContract(models.Model):
     other_alw_ids = fields.One2many(comodel_name="hr.alw.line",
                                     inverse_name="contract_id",
                                     string="Other Allowances")
+    probation_end_date = fields.Date('Probation End Date')
 
     def get_alw(self, alw_code):
         alw_id = self.other_alw_ids.filtered(lambda x: x.code == alw_code)
@@ -99,6 +102,44 @@ class HrContract(models.Model):
         if tax_amounts:
             total_tax = sum(tax_amounts) / 12
         return total_tax
+
+    @api.model
+    def create_cron_contract_end_date(self):
+        for contract in self.search([]):
+            if contract.state == 'open' and contract.date_end:
+                diff = (contract.date_end - datetime.today().date()).days
+                if diff <= 30:
+                    hr_users = self.env['res.users'].search(
+                        [('groups_id', 'in', [self.env.ref('hr.group_hr_user').id])])
+                    for user in hr_users:
+                        self.env["mail.activity"].sudo().create({
+                            "activity_type_id": self.env['mail.activity.type'].search([('name', 'like', 'To Do')]).id,
+                            "note": _(
+                                "Hint For Renewal: This contract will be end"),
+                            'summary': contract.name,
+                            "user_id": user.id,
+                            "res_id": contract.id,
+                            "res_model_id": self.env.ref("hr_contract.model_hr_contract").id,
+                        })
+
+    @api.model
+    def cron_contract_probation_period(self):
+        for contract in self.search([]):
+            if contract.state == 'open' and contract.probation_end_date:
+                diff = (contract.probation_end_date - datetime.today().date()).days
+                if diff == 0:
+                    hr_users = self.env['res.users'].search(
+                        [('groups_id', 'in', [self.env.ref('hr.group_hr_user').id])])
+                    for user in hr_users:
+                        self.env["mail.activity"].sudo().create({
+                            "activity_type_id": self.env['mail.activity.type'].search([('name', 'like', 'To Do')]).id,
+                            "note": _(
+                                "Hint For Probation Period End"),
+                            'summary': contract.name,
+                            "user_id": user.id,
+                            "res_id": contract.id,
+                            "res_model_id": self.env.ref("hr_contract.model_hr_contract").id,
+                        })
 
 
 class HrAlwLine(models.Model):

@@ -69,6 +69,7 @@
                                 <field name="sin_exist"/>
                                 <field name="sin_no" attrs="{'invisible':[('sin_exist','=', False)]}"/>
                                 <field name="sin_date" attrs="{'invisible':[('sin_exist','=', False)]}"/>
+                                <field name="sin_amount" attrs="{'invisible':[('sin_exist','=', False)]}"/>
                                 <field name="sin_end_date"
                                        attrs="{'invisible':[('sin_exist','=', False)]}"/>
                             </group>
@@ -77,6 +78,7 @@
                                 <field name="mi_exist"/>
                                 <field name="mi_no" attrs="{'invisible':[('mi_exist','=', False)]}"/>
                                 <field name="mi_date" attrs="{'invisible':[('mi_exist','=', False)]}"/>
+                                <field name="mi_amount" attrs="{'invisible':[('mi_exist','=', False)]}"/>
                             </group>
                         </group>
                     </page>
@@ -103,6 +105,9 @@
                         </group>
 
                     </page>
+                </xpath>
+                <xpath expr="//field[@name='date_end']" position="after">
+                    <field name="probation_end_date"/>
                 </xpath>
 
             </field>

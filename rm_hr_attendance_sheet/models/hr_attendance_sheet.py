@@ -1167,7 +1167,7 @@ class AttendanceSheet(models.Model):
                 'Please Add Work Entry Type For Attendance Sheet Presence Allowance Time With Code ATTSHPRS'))
         if not act_working_hours_entry:
                     raise ValidationError(_(
-                        'Please Add Work Entry Type For Attendance Sheet Working Hours With Code ATSHWH'))
+                        'Please Add Work Entry Type For Attendance Sheet Working Hours With Code ATTSHPRS'))
 
         overtime = [{
             'name': "Overtime",

@@ -29,13 +29,15 @@ class HrContract(models.Model):
     def _default_att_policy_id(self):
         return self.env['hr.attendance.policy'].search([('is_bus_registered','=',True)], limit=1).id
 
-    att_policy_id = fields.Many2one('hr.attendance.policy',
-                                    string='Attendance Policy',default=_default_att_policy_id)
+
+    att_policy_ids = fields.Many2many('hr.attendance.policy', string='Attendance Policy')
+
+    att_policy_id = fields.Many2one('hr.attendance.policy', string='Attendance Policy', domain='[("is_bus_registered", "=", is_bus_registered)]')
+
+
     multi_shift = fields.Boolean('Multi Shifts', default=False)
 
-    analytic_tag_ids = fields.Many2many(
-        comodel_name='account.analytic.tag',
-        string='Analytic Tags')
+
     overtime_approve = fields.Boolean('Overtime Approve Needed')
 
 

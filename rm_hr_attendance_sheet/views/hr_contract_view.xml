@@ -7,25 +7,27 @@
         <field name="inherit_id" ref="hr_payroll.hr_contract_form_inherit"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='structure_type_id']" position="after">
-                <field name="att_policy_id" required="1" domain="[('is_bus_registered','=',True)]"/>
+                <field name="att_policy_ids" invisible="1"/>
+                <field name="att_policy_id" required="1"/>
                 <field name="multi_shift"/>
                 <field name="overtime_approve"/>
             </xpath>
         </field>
     </record>
 
-    <record id="hr_contract_form_analytic" model="ir.ui.view">
-        <field name="name">hr.contract.view</field>
-        <field name="model">hr.contract</field>
-        <field name="inherit_id" ref="hr_payroll_account.hr_contract_view_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='analytic_account_id']" position="after">
-                <field name="analytic_tag_ids" widget="many2many_tags"
-                       domain="['|', ('company_id', '=', company_id), ('company_id', '=', False)]"
-                       groups="analytic.group_analytic_tags"/>
-            </xpath>
-        </field>
-    </record>
+
+<!--    <record id="hr_contract_form_analytic" model="ir.ui.view">-->
+<!--        <field name="name">hr.contract.view</field>-->
+<!--        <field name="model">hr.contract</field>-->
+<!--        <field name="inherit_id" ref="hr_payroll_account.hr_contract_view_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='analytic_account_id']" position="after">-->
+<!--                <field name="analytic_tag_ids" widget="many2many_tags"-->
+<!--                       domain="['|', ('company_id', '=', company_id), ('company_id', '=', False)]"-->
+<!--                       groups="analytic.group_analytic_tags"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
 
             <record id="hr_contract_form_inherit" model="ir.ui.view">
             <field name="name">Hr Contract Form Inherit</field>
