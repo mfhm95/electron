@@ -82,7 +82,7 @@
                             </group>
                         </group>
                     </page>
-                   <page name="salary_items" string="Salary Items" groups="hr.group_hr_manager">
+                    <page name="salary_items" string="Salary Items" groups="hr.group_hr_manager">
                         <group>
                             <group string="Insurance Items">
                                 <field name="basic_salary"/>
@@ -95,14 +95,15 @@
 
                         </group>
                         <group string="Other Allowances">
-                            <field name="other_alw_ids" nolabel="1">
-                                <tree string="Ohter allowances" editable="bottom">
-                                    <field name="alw_id" widget="selection"/>
-                                    <field name="code"/>
-                                    <field name="amount"/>
-                                </tree>
-                            </field>
                         </group>
+
+                        <field name="other_alw_ids" nolabel="1">
+                            <tree string="Ohter allowances" editable="bottom">
+                                <field name="alw_id" widget="selection"/>
+                                <field name="code"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
 
                     </page>
                 </xpath>

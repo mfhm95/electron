@@ -180,7 +180,9 @@
                         <field name="name"/>
                     </h1>
                     <group string="Overtime Rules">
-                        <field name="overtime_rule_ids" nolabel="1">
+
+                    </group>
+                    <field name="overtime_rule_ids" nolabel="1">
                             <tree editable="bottom">
                                 <field name="name"/>
                                 <field name="type"/>
@@ -197,7 +199,6 @@
                                 <!--                                <field name="time_to" widget="float_time"/>-->
                             </tree>
                         </field>
-                    </group>
                     <group string="Difference Time Rule">
                         <div colspan="12">
                             <p class="oe_grey">
@@ -227,7 +228,6 @@
                                class="oe_inline"/>
 
                     </group>
-
                     <group string="Presence Allowance">
                         <div colspan="12">
                             <p class="oe_grey">
@@ -237,8 +237,6 @@
                                class="oe_inline"/>
 
                     </group>
-
-
                     <group string="Late In Rule">
                         <field name="late_rule_id" nolabel="1"/>
                     </group>
@@ -255,6 +253,7 @@
             </form>
         </field>
     </record>
+
 
     <record id="hr_attendance_policy_tree_view" model="ir.ui.view">
         <field name="name">hr.attendance.tree.view</field>
