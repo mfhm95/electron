@@ -17,7 +17,7 @@ _logger = logging.getLogger(__name__)
 
 from odoo.addons.rm_bio_attendance.zk import ZK, const
 
-from odoo import api, fields, models
+from odoo import api, fields, models,_
 import pytz
 import sys
 
