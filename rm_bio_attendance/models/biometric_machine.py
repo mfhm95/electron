@@ -98,6 +98,18 @@ class biometric_machine(models.Model):
         for mc in self.search([('state', '=', 'active')]):
             mc.check_notification()
 
+    def button_activate(self):
+        for rec in self:
+            rec.write({
+                'state': 'active'
+            })
+
+    def button_inactivate(self):
+        for rec in self:
+            rec.write({
+                'state': 'inactive'
+            })
+
     def check_notification(self):
         for mc in self:
             now = datetime.strftime(datetime.now(), DATETIME_FORMAT)
@@ -120,8 +132,7 @@ class biometric_machine(models.Model):
             partners = self.env['res.partner']
 
             for user in self.env['res.users'].search([]):
-                if user.has_group(
-                        'hr_bio_attendance.group_check_bio_attendance'):
+                if user.has_group('rm_bio_attendance.group_check_bio_attendance'):
                     partners += user.partner_id
             if partners:
                 mail_content = _(

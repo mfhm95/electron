@@ -123,6 +123,13 @@
                                 string="Download Log" states="active"
                                 class="btn-primary"
                         />
+                        <button name="button_activate"
+                                type="object" string="Activate" states="inactive"
+                                class="btn-primary"
+                        />
+                        <button name="button_inactivate"
+                                type="object" string="Disable" states="active"
+                                class="btn-primary" />
                         <!--  <button name="action_download_from_log"
                                   string="Download from log"
                                   class="btn btn-primary" type="object"
@@ -180,8 +187,8 @@
                             </div>
                         </group>
                         <group string="Download Logs">
-                            <field name="log_ids" nolabel="1" readonly="1"/>
                         </group>
+                            <field name="log_ids" nolabel="1" readonly="1"/>
                     </sheet>
                 </form>
             </field>
