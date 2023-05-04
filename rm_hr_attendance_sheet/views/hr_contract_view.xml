@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='structure_type_id']" position="after">
                 <field name="att_policy_ids" invisible="1"/>
+                <field name="is_bus_registered" invisible="1" string="Is Bus Registered" />
                 <field name="att_policy_id" required="1"/>
                 <field name="multi_shift"/>
                 <field name="overtime_approve"/>
@@ -35,7 +36,9 @@
             <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='information']//group[@name='salary']" position="after">
-                    <group><field name="is_bus_registered" string="Is Bus Registered" /></group>
+                    <group>
+                        <field name="is_bus_registered" string="Is Bus Registered" />
+                    </group>
                     <group name="bus_registered" attrs="{'invisible':[('is_bus_registered','=',False)]}">
                         <label for="bus_registered"/>
                         <div class="o_row" name="bus_registered">
